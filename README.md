@@ -1,6 +1,6 @@
 # androyd-webapp
 
-Web App para control de valores bursátiles
+Web App para control de valores bursátiles.
 
 ## Project setup
 
