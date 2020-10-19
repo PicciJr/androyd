@@ -1,15 +1,15 @@
 <template>
   <div class="h-screen bg-black">
-    <m-search-system></m-search-system>
+    <m-stock-card></m-stock-card>
   </div>
 </template>
 
 <script>
-import MSearchSystem from '@/components/molecules/MSearchSystem'
+import MStockCard from '@/components/molecules/MStockCard'
 export default {
   name: 'App',
   components: {
-    MSearchSystem,
+    MStockCard,
   },
 }
 </script>
