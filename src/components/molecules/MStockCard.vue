@@ -1,6 +1,6 @@
 <!-- Trade en activo, en cartera. Shape rectangular con resumen básico. -->
 <template>
-  <div class="w-1/5 p-4 bg-gray-400 border border-white rounded-lg">
+  <div class="w-1/5 p-4 bg-gray-400 border border-white rounded-lg cursor-pointer">
     <!-- Heading text -->
     <div class="flex flex-wrap items-center justify-between mb-2">
       <span class="pr-4 text-2xl font-bold text-white">{{
