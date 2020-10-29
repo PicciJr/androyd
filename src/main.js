@@ -4,6 +4,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import Vuesax from 'vuesax'
+import vClickOutside from 'vue-click-outside'
 import 'vuesax/dist/vuesax.css' //Vuesax styles
 
 Vue.use(VueRouter)
@@ -17,6 +18,7 @@ Vue.use(Vuesax, {
     input: '#524E4E',
   },
 })
+Vue.use(vClickOutside)
 
 Vue.config.productionTip = false
 

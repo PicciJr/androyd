@@ -11,6 +11,7 @@
     "boxicons": "^2.0.5",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-click-outside": "^1.1.0",
     "vue-router": "^3.4.6",
     "vuesax": "^4.0.1-alpha.25"
   },
