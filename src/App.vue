@@ -6,7 +6,9 @@
       <a-journal-note></a-journal-note>
       <a-labeled-button></a-labeled-button>
       <a-circle-snapshot></a-circle-snapshot>
-      <m-new-journal-note></m-new-journal-note>
+      <m-tag-groups></m-tag-groups>
+      <a-strategy-principles-group></a-strategy-principles-group>
+      <m-date-picker></m-date-picker>
     </div>
   </div>
 </template>
@@ -17,7 +19,9 @@ import MOperationsTable from '@/components/molecules/MOperationsTable'
 import AJournalNote from '@/components/atoms/AJournalNote'
 import ALabeledButton from '@/components/atoms/ALabeledButton'
 import ACircleSnapshot from '@/components/atoms/ACircleSnapshot'
-import MNewJournalNote from '@/components/molecules/MNewJournalNote'
+import MTagGroups from '@/components/molecules/MTagGroups'
+import AStrategyPrinciplesGroup from '@/components/atoms/AStrategyPrinciplesGroup'
+import MDatePicker from '@/components/molecules/MDatePicker'
 export default {
   name: 'App',
   components: {
@@ -26,7 +30,9 @@ export default {
     MOperationsTable,
     ALabeledButton,
     ACircleSnapshot,
-    MNewJournalNote,
+    MTagGroups,
+    AStrategyPrinciplesGroup,
+    MDatePicker
   },
 }
 </script>
