@@ -3,12 +3,16 @@ import 'boxicons'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
+import Home from './Home.vue'
+import OperationDetail from './OperationDetail.vue'
+import StockDetail from './StockDetail.vue'
+import NewOperation from './NewOperation.vue'
+import Backtesting from './Backtesting.vue'
 import Vuesax from 'vuesax'
 import VueTailwind from 'vue-tailwind'
 import vClickOutside from 'vue-click-outside'
 import 'vuesax/dist/vuesax.css' //Vuesax styles
 
-Vue.use(VueRouter)
 Vue.use(Vuesax, {
   colors: {
     primary: '#302C2D',
@@ -47,7 +51,14 @@ Vue.config.productionTip = false
 
 const router = new VueRouter({
   mode: 'history',
-  routes: [{ path: '/', component: App }],
+  routes: [
+    { path: '/', component: Home },
+    { path: '/detalle-operacion/:id', component: OperationDetail },
+    { path: '/detalle-valor/:valor', component: StockDetail },
+    { path: '/nueva-operacion', component: NewOperation },
+    { path: '/backtesting', component: Backtesting },
+  ],
 })
+Vue.use(VueRouter)
 
 new Vue({ el: '#app', router, render: (h) => h(App) })
