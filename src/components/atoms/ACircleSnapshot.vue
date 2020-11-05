@@ -1,9 +1,10 @@
 <!-- Circulo para desplegar información muy resumida -->
 <template>
   <div
-    class="flex items-center justify-center w-40 h-40 bg-gray-200 border-none rounded-full shadow-lg"
+    class="flex flex-col items-center justify-center w-40 h-40 text-center bg-gray-200 border-none rounded-full shadow-lg"
   >
-    <div class="text-xl font-bold text-white">{{ text }}</div>
+    <div class="mb-1 text-xl font-bold text-white">{{ text }}</div>
+    <div class="font-medium text-white text-md">{{ secondaryText }}</div>
   </div>
 </template>
 
@@ -13,6 +14,10 @@ export default {
     text: {
       type: String,
       default: 'Información',
+    },
+    secondaryText: {
+      type: String,
+      default: 'Información secundaria',
     },
   },
 }

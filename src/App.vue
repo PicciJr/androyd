@@ -9,6 +9,8 @@
       <m-tag-groups></m-tag-groups>
       <a-strategy-principles-group></a-strategy-principles-group>
       <m-date-picker></m-date-picker>
+      <m-backtesting-table></m-backtesting-table>
+      <a-backtesting-highlight></a-backtesting-highlight>
     </div>
   </div>
 </template>
@@ -22,6 +24,8 @@ import ACircleSnapshot from '@/components/atoms/ACircleSnapshot'
 import MTagGroups from '@/components/molecules/MTagGroups'
 import AStrategyPrinciplesGroup from '@/components/atoms/AStrategyPrinciplesGroup'
 import MDatePicker from '@/components/molecules/MDatePicker'
+import MBacktestingTable from '@/components/molecules/MBacktestingTable'
+import ABacktestingHighlight from '@/components/atoms/ABacktestingHighlight'
 export default {
   name: 'App',
   components: {
@@ -32,7 +36,9 @@ export default {
     ACircleSnapshot,
     MTagGroups,
     AStrategyPrinciplesGroup,
-    MDatePicker
+    MDatePicker,
+    MBacktestingTable,
+    ABacktestingHighlight,
   },
 }
 </script>

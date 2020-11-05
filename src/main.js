@@ -33,6 +33,11 @@ const vueTailwindSettings = {
         'text-sm rounded-full w-8 h-8 mx-auto hover:bg-gray-100 text-gray-200 disabled:opacity-25 disabled:cursor-not-allowed',
     },
   },
+  TTable: {
+    classes: {
+      table: 'shadow min-w-full divide-y divide-gray-200',
+    },
+  },
 }
 Vue.use(VueTailwind, vueTailwindSettings)
 

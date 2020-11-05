@@ -1,6 +1,6 @@
 <!-- Grupo de ADateCalendar para seleccionar fechas de inicio y fin -->
 <template>
-  <div class="flex bg-black">
+  <div class="flex">
     <div class="pr-6">
       <a-date-calendar></a-date-calendar>
     </div>
