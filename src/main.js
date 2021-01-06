@@ -55,7 +55,7 @@ const router = new VueRouter({
     { path: '/', component: Home },
     { path: '/detalle-operacion/:id', component: OperationDetail },
     { path: '/detalle-valor/:valor', component: StockDetail },
-    { path: '/nueva-operacion', component: NewOperation },
+    { path: '/nueva-operacion/:valor', component: NewOperation },
     { path: '/backtesting', component: Backtesting },
   ],
 })

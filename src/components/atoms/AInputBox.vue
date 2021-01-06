@@ -1,23 +1,26 @@
 <template>
-  <div class="flex">
+  <div class="p-1 text-white">
     <!-- Input field -->
-    <vs-input
+    <input
       type="text"
+      class="w-full h-10 px-2 py-1 bg-gray-300 rounded-lg"
       v-model="inputValue"
-      icon-after
-      placeholder="Busca un valor..."
-    >
-      <template #icon> <i class="bx bx-search-alt"></i> </template
-    ></vs-input>
+      :placeholder="placeholder"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      inputValue: '',
-    }
+  props: {
+    placeholder: {
+      default: 'Busca un valor...',
+      type: String,
+    },
+    inputValue: {
+      default: '',
+      type: String,
+    },
   },
 }
 </script>

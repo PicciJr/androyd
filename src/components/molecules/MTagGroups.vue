@@ -5,7 +5,7 @@
     <div class="p-1" v-for="tag in tags" :key="tag.id">
       <a-tag-element :tagText="tag"></a-tag-element>
     </div>
-    <input type="text" class="bg-transparent" />
+    <input type="text" class="w-full bg-transparent" />
     <i class="text-white fill-current bx bx-hash bx-md"></i>
   </div>
 </template>
