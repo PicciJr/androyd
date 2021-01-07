@@ -15,7 +15,7 @@
       <span class="pr-4">{{ tickerSymbol }}</span>
       <span class="pr-4 font-thin">(${{ stockPrice }})</span>
       <span class="font-bold text-gray-200"
-        >{{ priceChgSymbol }} {{ priceChg }}%</span
+        >{{ priceChgSymbol }}{{ priceChg }}%</span
       >
     </div>
     <span class="font-bold text-gray-200">{{ stockFullName }}</span>
@@ -27,7 +27,7 @@
           placeholder="Posición inicial (%)"
           v-model="initialPositionSize"
         ></a-input-box>
-        <span class="">({{ nominalCalculated }})</span>
+        <span class="font-thin">({{ nominalCalculated }})</span>
       </div>
       <!-- Second -->
       <div class="flex items-center">
@@ -40,7 +40,7 @@
           v-model="stopLossDistance"
         ></a-input-box>
 
-        <span class="">({{ stopLossCalculated }})</span>
+        <span class="font-thin">({{ stopLossCalculated }})</span>
       </div>
       <!-- Third -->
       <div class="flex items-center">
@@ -68,7 +68,9 @@
     </div>
     <!-- Confirmation checkbox -->
     <div class="flex justify-end">
-      <i class="text-green-500 fill-current bx bxs-check-circle bx-md"></i>
+      <i
+        class="text-green-500 cursor-pointer fill-current bx bxs-check-circle bx-md"
+      ></i>
     </div>
   </div>
 </template>
@@ -79,6 +81,7 @@ import AInputBox from '@/components/atoms/AInputBox'
 import AStrategyPrinciple from '@/components/atoms/AStrategyPrinciple'
 import MTagGroups from '@/components/molecules/MTagGroups'
 export default {
+  name: 'NewOperation',
   components: {
     AFlagBadge,
     AInputBox,
@@ -90,13 +93,13 @@ export default {
       myCurrentBudget: 17000,
       hasStockFlagMessage: true,
       stockPrice: 20.5,
-      initialPositionSize: 0.0,
-      entryPrice: 0.0,
-      stopLossDistance: 0.0,
+      initialPositionSize: null,
+      entryPrice: null,
+      stopLossDistance: null,
       technicalPatternsAvailable: [],
       technicalPattern: '',
-      technicalPatternDuration: 0,
-      priceChg: 1.1,
+      technicalPatternDuration: null,
+      priceChg: 5.5,
       stockFullName: 'Roku Entertainment',
       strategyPrinciples: [
         'Buenos fundamentales',
@@ -114,13 +117,10 @@ export default {
       return this.priceChg >= 0 ? '+' : '-'
     },
     nominalCalculated() {
-      return (
-        this.stockPrice *
-        ((this.initialPositionSize / 100) * this.myCurrentBudget)
-      )
+      return (this.initialPositionSize * this.myCurrentBudget) / 100
     },
     stopLossCalculated() {
-      return (this.entryPrice * this.stopLossDistance) / 100
+      return this.entryPrice - (this.entryPrice * this.stopLossDistance) / 100
     },
   },
 }
