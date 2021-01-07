@@ -11,6 +11,7 @@
 <script>
 import MSearchSystem from '@/components/molecules/MSearchSystem'
 export default {
+  name: 'Home',
   components: {
     MSearchSystem,
   },

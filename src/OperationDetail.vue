@@ -45,6 +45,7 @@
 <script>
 import AFlagBadge from '@/components/atoms/AFlagBadge'
 export default {
+  name: 'OperationDetail',
   components: {
     AFlagBadge,
   },
