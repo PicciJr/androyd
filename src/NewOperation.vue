@@ -22,12 +22,12 @@
     <!-- Form para introducir datos -->
     <div class="mt-1 mb-12">
       <!-- First -->
-      <div class="flex items-center mb-4">
+      <div class="flex items-center">
         <a-input-box
           placeholder="Posición inicial (%)"
           v-model="initialPositionSize"
         ></a-input-box>
-        <span class="font-thin">({{ nominalCalculated }})</span>
+        <span class="font-thin">({{ nominalCalculated | roundTwoDecimals }})</span>
       </div>
       <!-- Second -->
       <div class="flex items-center">
@@ -40,7 +40,7 @@
           v-model="stopLossDistance"
         ></a-input-box>
 
-        <span class="font-thin">({{ stopLossCalculated }})</span>
+        <span class="font-thin">({{ stopLossCalculated | roundTwoDecimals }})</span>
       </div>
       <!-- Third -->
       <div class="flex items-center">

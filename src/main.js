@@ -11,6 +11,7 @@ import Backtesting from './Backtesting.vue'
 import Vuesax from 'vuesax'
 import VueTailwind from 'vue-tailwind'
 import vClickOutside from 'vue-click-outside'
+import { roundTwoDecimals } from '../src/filters'
 import 'vuesax/dist/vuesax.css' //Vuesax styles
 
 Vue.use(Vuesax, {
@@ -60,5 +61,7 @@ const router = new VueRouter({
   ],
 })
 Vue.use(VueRouter)
+
+Vue.filter('roundTwoDecimals', roundTwoDecimals)
 
 new Vue({ el: '#app', router, render: (h) => h(App) })
