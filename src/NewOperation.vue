@@ -28,7 +28,7 @@
           v-model="initialPositionSize"
         ></a-input-box>
         <span class="font-thin"
-          >({{ nominalCalculated | roundTwoDecimals }})</span
+          >($ {{ nominalCalculated | roundTwoDecimals }})</span
         >
       </div>
       <!-- Second -->
@@ -43,7 +43,7 @@
         ></a-input-box>
 
         <span class="font-thin"
-          >({{ stopLossCalculated | roundTwoDecimals }})</span
+          >($ {{ stopLossCalculated | roundTwoDecimals }})</span
         >
       </div>
       <!-- Third -->
@@ -64,7 +64,11 @@
     </div>
     <!-- Tags to be entered -->
     <div class="w-2/3 mb-2">
-      <m-tag-groups></m-tag-groups>
+      <m-tag-groups
+        :tags="tags"
+        @new-tag="handleNewTag"
+        @delete-tag="handleDeleteTag"
+      ></m-tag-groups>
     </div>
     <!-- Principles checklist -->
     <div v-for="principle in strategyPrinciples" :key="principle.id">
@@ -124,12 +128,20 @@ export default {
         'Contracción precio parte derecha',
         'Acumulación institucional',
       ],
+      tags: ['retesteo', 'reentrada'],
     }
   },
   methods: {
     handleTechnicalPatternSelected(pattern) {
       this.technicalPattern = pattern
-    }
+    },
+    handleNewTag(newTag) {
+      this.tags.push(newTag)
+    },
+    handleDeleteTag(tag) {
+      const tagIndex = this.tags.indexOf(tag)
+      this.tags.splice(tagIndex, 1)
+    },
   },
   computed: {
     tickerSymbol() {
