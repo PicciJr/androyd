@@ -27,7 +27,9 @@
           placeholder="Posición inicial (%)"
           v-model="initialPositionSize"
         ></a-input-box>
-        <span class="font-thin">({{ nominalCalculated | roundTwoDecimals }})</span>
+        <span class="font-thin"
+          >({{ nominalCalculated | roundTwoDecimals }})</span
+        >
       </div>
       <!-- Second -->
       <div class="flex items-center">
@@ -40,15 +42,17 @@
           v-model="stopLossDistance"
         ></a-input-box>
 
-        <span class="font-thin">({{ stopLossCalculated | roundTwoDecimals }})</span>
+        <span class="font-thin"
+          >({{ stopLossCalculated | roundTwoDecimals }})</span
+        >
       </div>
       <!-- Third -->
       <div class="flex items-center">
         <div class="w-2/3">
-          <a-input-box
-            placeholder="Patrón técnico"
-            v-model="technicalPattern"
-          ></a-input-box>
+          <a-select-input-box
+            :options="technicalPatternsAvailable"
+            @select="handleTechnicalPatternSelected"
+          ></a-select-input-box>
         </div>
         <div class="w-1/3">
           <a-input-box
@@ -78,6 +82,7 @@
 <script>
 import AFlagBadge from '@/components/atoms/AFlagBadge'
 import AInputBox from '@/components/atoms/AInputBox'
+import ASelectInputBox from '@/components/atoms/ASelectInputBox'
 import AStrategyPrinciple from '@/components/atoms/AStrategyPrinciple'
 import MTagGroups from '@/components/molecules/MTagGroups'
 export default {
@@ -85,6 +90,7 @@ export default {
   components: {
     AFlagBadge,
     AInputBox,
+    ASelectInputBox,
     AStrategyPrinciple,
     MTagGroups,
   },
@@ -96,7 +102,18 @@ export default {
       initialPositionSize: null,
       entryPrice: null,
       stopLossDistance: null,
-      technicalPatternsAvailable: [],
+      technicalPatternsAvailable: [
+        'Cup & Handle',
+        'Darvas Box',
+        'Cup',
+        'Power play',
+        'IPO Base',
+        'Flat Base',
+        'Saucer',
+        'Double Bottom',
+        'Ascending Base',
+        'Base over Base',
+      ],
       technicalPattern: '',
       technicalPatternDuration: null,
       priceChg: 5.5,
@@ -107,6 +124,11 @@ export default {
         'Contracción precio parte derecha',
         'Acumulación institucional',
       ],
+    }
+  },
+  methods: {
+    handleTechnicalPatternSelected(pattern) {
+      this.technicalPattern = pattern
     }
   },
   computed: {
