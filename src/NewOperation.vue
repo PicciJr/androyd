@@ -128,7 +128,7 @@ export default {
         'Contracción precio parte derecha',
         'Acumulación institucional',
       ],
-      tags: ['retesteo', 'reentrada'],
+      tags: [],
     }
   },
   methods: {

@@ -1,7 +1,7 @@
 <!-- Grupo de etiquetas individuales -->
 <template>
   <div
-    class="relative flex flex-wrap items-center px-2 py-1 border border-white"
+    class="relative flex flex-wrap items-center p-2 border border-white"
   >
     <!-- Etiquetas -->
     <div class="p-1" v-for="tag in tags" :key="tag.id">
@@ -12,12 +12,12 @@
     </div>
     <input
       type="text"
-      class="bg-transparent"
+      class="w-full bg-transparent"
       v-model="newTag"
       @keypress.enter="newTagInput"
     />
     <i
-      class="absolute top-0 right-0 pt-2 pr-2 text-white fill-current bx bx-hash bx-md"
+      class="absolute top-0 right-0 pr-2 text-white fill-current bx bx-hash bx-md"
     ></i>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     isValidTag() {
-      return this.newTag !== ''
+      return this.newTag.trim() !== ''
     },
   },
   methods: {
