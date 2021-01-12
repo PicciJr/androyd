@@ -30,8 +30,8 @@ export default {
       return this.journalNoteData.isSuccessNote
         ? 'text-green-500 fill-current bx bxs-check-circle bx-sm'
         : this.journalNoteData.isFailureNote
-        ? 'text-red-500 fill-current bx bx-error-circle bx-sm'
-        : 'bx bxs-send bx-sm'
+          ? 'text-red-500 fill-current bx bx-error-circle bx-sm'
+          : 'bx bxs-send bx-sm'
     },
   },
 }

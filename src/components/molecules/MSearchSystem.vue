@@ -1,3 +1,4 @@
+<!-- Sistema de busqueda -->
 <template>
   <div>
     <!-- Search Box -->

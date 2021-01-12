@@ -1,3 +1,4 @@
+<!-- Input para entrada de texto aleatorio -->
 <template>
   <div class="p-1 text-white">
     <!-- Input field -->

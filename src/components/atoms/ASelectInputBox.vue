@@ -1,3 +1,4 @@
+<!-- Combo box para seleccion de entre lista de valores -->
 <template>
   <select
     :placeholder="placeholder"

@@ -37,16 +37,16 @@ export default {
       return this.flagMessage.type === 'red'
         ? 'bg-red-500'
         : this.flagMessage.type === 'green'
-        ? 'bg-green-400'
-        : 'bg-gray-800'
+          ? 'bg-green-400'
+          : 'bg-gray-800'
     },
     // Icono que se ve en el flag según sea mensaje positivo o negativo
     setIcon() {
       return this.flagMessage.type === 'red'
         ? 'bx bxs-error bx-sm'
         : this.flagMessage.type === 'green'
-        ? 'bx bxs-error bx-sm'
-        : 'bx bxs-error bx-sm'
+          ? 'bx bxs-error bx-sm'
+          : 'bx bxs-error bx-sm'
     },
   },
 }

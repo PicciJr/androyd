@@ -1,3 +1,4 @@
+<!-- Tabla para introducir / modificar detalles de operacion -->
 <template>
   <div class="p-2">
     <div v-for="field in tableFields" :key="field.id" class="flex w-2/5">

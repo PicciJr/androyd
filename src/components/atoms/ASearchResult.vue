@@ -1,3 +1,4 @@
+<!-- Resultados que se despliegan al encontrar un resultado -->
 <template>
   <div class="flex p-2 mb-1 text-lg bg-gray-300">
     <!-- Symbol and Name -->
