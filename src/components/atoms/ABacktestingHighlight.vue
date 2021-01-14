@@ -2,9 +2,10 @@
 <template>
   <div
     :class="[
-      'px-4 py-2 text-white rounded-lg text-xl w-2/3',
+      'px-4 py-2 text-white rounded-lg text-xl',
       index % 2 === 0 ? 'bg-gray-300' : 'bg-gray-200',
     ]"
+    style="width: fit-content;"
   >
     {{ highlightText }}
   </div>

@@ -1,11 +1,11 @@
 <!-- Tabla para resumen de backtesting / Solo lectura -->
 <template>
-  <div class="w-1/3 p-1 text-xl bg-gray-900 rounded-lg">
+  <div class="w-2/3 py-2 text-xl bg-gray-900 rounded-lg">
     <t-table :data="tableData">
       <template slot="row" slot-scope="props">
         <tr :class="[props.rowIndex % 2 === 0 ? 'bg-gray-900' : 'bg-gray-200']">
           <td
-            :class="[props.rowIndex % 2 !== 0 ? 'text-white' : 'text-gray-300', 'px-4 font-black']"
+            :class="[props.rowIndex % 2 !== 0 ? 'text-white' : 'text-gray-300', 'px-4 font-bold']"
           >
             {{ props.row.field }}
           </td>
