@@ -1,6 +1,6 @@
 <!-- Nota tomada de un valor -->
 <template>
-  <div class="flex items-center text-lg text-white">
+  <div class="flex items-center mb-1 text-lg text-white">
     <!-- Flag icon -->
     <i
       :class="setIcon"

@@ -44,42 +44,42 @@ export default {
         {
           id: 'entryPrice',
           label: 'Precio entrada',
-          value: 0.0,
+          value: null,
         },
         {
           id: 'initialSize',
           label: 'Posición inicial',
-          value: 0.0,
+          value: null,
         },
         {
           id: 'initialPriceAction',
           label: 'Price Action Entrada',
-          value: 0.0,
+          value: null,
         },
         {
           id: 'initialVolume',
           label: 'Volumen entrada',
-          value: 0.0,
+          value: null,
         },
         {
           id: 'entryDate',
           label: 'Fecha entrada',
-          value: '10/10/2010',
+          value: '',
         },
         {
           id: 'supportLevel_1',
           label: 'Soporte 1',
-          value: 0.0,
+          value: null,
         },
         {
           id: 'supportLevel_2',
           label: 'Soporte 2',
-          value: 0.0,
+          value: null,
         },
         {
           id: 'technicalPattern',
           label: 'Patrón técnico',
-          value: 'Cup & Handle',
+          value: '',
         },
       ],
     }
