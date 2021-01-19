@@ -4,6 +4,7 @@
     <div v-for="(data, index) in operationsLogData" :key="data.id" class="flex">
       <div class="w-1/4">
         <a-table-field
+          :class="setTextColorBasedOnStatus(data)"
           v-if="data.isActiveOperation"
           fieldText="Operación activa"
         ></a-table-field>
@@ -30,7 +31,11 @@
 </template>
 
 <script>
+import ATableField from '@/components/atoms/ATableField'
 export default {
+  components: {
+    ATableField,
+  },
   props: {
     operationsLogData: {
       type: Array,
@@ -50,8 +55,27 @@ export default {
             operationActiveDays: 4,
             operationPerformance: -3.5,
           },
+          {
+            isActiveOperation: false,
+            operationStatus: 'Closed',
+            operationEndDate: '9/9/2011',
+            operationActiveDays: 4,
+            operationPerformance: -3.5,
+          },
+          {
+            isActiveOperation: false,
+            operationStatus: 'Closed',
+            operationEndDate: '9/9/2011',
+            operationActiveDays: 4,
+            operationPerformance: -3.5,
+          },
         ]
       },
+    },
+  },
+  methods: {
+    setTextColorBasedOnStatus(operation) {
+      return operation.isActiveOperation ? 'text-green-500' : ''
     },
   },
 }
