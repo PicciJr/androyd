@@ -9,6 +9,7 @@
         type="text"
         class="w-full pl-4 text-white bg-transparent"
         placeholder="Busca un valor..."
+        @change="$emit('searching-stock', searchText)"
       />
       <i class="pr-4 text-white bx bx-search-alt bx-sm"></i>
     </div>
