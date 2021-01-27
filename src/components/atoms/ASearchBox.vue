@@ -9,7 +9,7 @@
         type="text"
         class="w-full pl-4 text-white bg-transparent"
         placeholder="Busca un valor..."
-        @change="$emit('searching-stock', searchText)"
+        @keyup="handleSearchingStock"
       />
       <i class="pr-4 text-white bx bx-search-alt bx-sm"></i>
     </div>
@@ -21,7 +21,17 @@ export default {
   data() {
     return {
       searchText: '',
+      timeoutForNextSearch: null,
     }
+  },
+  methods: {
+    // debounce function to make one query at a time
+    handleSearchingStock() {
+      clearTimeout(this.timeoutForNextSearch)
+      this.timeoutForNextSearch = setTimeout(() => {
+        this.$emit('searching-stock', this.searchText)
+      }, 1500)
+    },
   },
 }
 </script>
