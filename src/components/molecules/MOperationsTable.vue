@@ -6,7 +6,10 @@
         <a-table-field :fieldText="field.label"></a-table-field>
       </div>
       <div class="w-full">
-        <a-table-edit-field :data="field.value"></a-table-edit-field>
+        <a-table-edit-field
+          :field="field"
+          @table-edit="handleTableEdit"
+        ></a-table-edit-field>
       </div>
     </div>
   </div>
@@ -26,14 +29,14 @@ export default {
       type: Object,
       default() {
         return {
-          entryPrice: 0.0,
-          initialSize: 0.0,
-          initialPriceAction: 0.0,
-          initialVolume: 0.0,
-          entryDate: '10/10/2010',
-          supportLevel_1: 0.0,
-          supportLevel_2: 0.0,
-          technicalPattern: 'Cup & Handle',
+          entryPrice: null,
+          initialSize: null,
+          initialPriceAction: null,
+          initialVolume: null,
+          entryDate: null,
+          supportLevel_1: null,
+          supportLevel_2: null,
+          technicalPattern: null,
         }
       },
     },
@@ -83,6 +86,11 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    handleTableEdit(value, field) {
+      this.$emit('table-edit', value, field)
+    },
   },
 }
 </script>

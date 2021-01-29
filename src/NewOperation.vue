@@ -78,8 +78,14 @@
     <div class="flex justify-end">
       <i
         class="text-green-500 cursor-pointer fill-current bx bxs-check-circle bx-md"
+        @click.stop="openConfirmationModal"
       ></i>
     </div>
+    <!-- Modal de confirmación -->
+    <m-confirm-action-modal
+      v-if="isModalOpened"
+      @closed="closeConfirmationModal"
+    ></m-confirm-action-modal>
   </div>
 </template>
 
@@ -89,6 +95,7 @@ import AInputBox from '@/components/atoms/AInputBox'
 import ASelectInputBox from '@/components/atoms/ASelectInputBox'
 import AStrategyPrinciple from '@/components/atoms/AStrategyPrinciple'
 import MTagGroups from '@/components/molecules/MTagGroups'
+import MConfirmActionModal from '@/components/molecules/MConfirmActionModal'
 export default {
   name: 'NewOperation',
   components: {
@@ -97,6 +104,7 @@ export default {
     ASelectInputBox,
     AStrategyPrinciple,
     MTagGroups,
+    MConfirmActionModal,
   },
   data() {
     return {
@@ -129,6 +137,7 @@ export default {
         'Acumulación institucional',
       ],
       tags: [],
+      isModalOpened: false,
     }
   },
   methods: {
@@ -141,6 +150,12 @@ export default {
     handleDeleteTag(tag) {
       const tagIndex = this.tags.indexOf(tag)
       this.tags.splice(tagIndex, 1)
+    },
+    openConfirmationModal() {
+      this.isModalOpened = true
+    },
+    closeConfirmationModal() {
+      this.isModalOpened = false
     },
   },
   computed: {

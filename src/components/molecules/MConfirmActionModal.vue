@@ -18,7 +18,7 @@
       Modal panel, show/hide based on modal state.
     -->
       <div
-        class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        class="inline-block overflow-hidden text-center align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-headline"
@@ -36,17 +36,22 @@
             ></i>
             <p class="mb-6 text-3xl text-gray-200">{{ modalMessage }}</p>
             <div class="flex justify-between">
+              <!-- Accion de negacion, cancelar -->
               <vs-button
                 class="w-20 border border-white cursor-pointer"
                 border
-                @click="closeModal"
+                @click="handleCancelledAction"
                 ><span class="text-white">{{
                   btnSecondaryText
                 }}</span></vs-button
               >
-              <vs-button class="w-20 cursor-pointer" color="#524E4E">{{
-                btnPrimaryText
-              }}</vs-button>
+              <!-- Accion de confirmacion, positiva -->
+              <vs-button
+                class="w-20 cursor-pointer"
+                color="#524E4E"
+                @click="handleConfirmAction"
+                >{{ btnPrimaryText }}</vs-button
+              >
             </div>
           </div>
         </div>
@@ -92,6 +97,15 @@ export default {
   methods: {
     closeModal() {
       this.isOpen = false
+      this.$emit('closed')
+    },
+    handleConfirmAction() {
+      this.isOpen = false
+      this.$emit('confirmed-action')
+    },
+    handleCancelledAction() {
+      this.isOpen = false
+      this.$emit('cancelled-action')
     },
   },
 }

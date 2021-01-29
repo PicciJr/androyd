@@ -3,7 +3,11 @@
   <div class="px-4 py-2 bg-gray-400 border border-white rounded-lg">
     <!-- Cabecera -->
     <div class="flex items-center mb-2">
-      <i class="text-white fill-current bx bx-plus bx-md"></i>
+      <router-link :to="`/nueva-operacion/${$route.params.valor}`">
+        <i
+          class="p-1 text-white rounded-full cursor-pointer fill-current bx bx-plus bx-md hover:bg-gray-200"
+        ></i>
+      </router-link>
       <div class="flex items-center justify-center w-full">
         <span class="pr-4 text-2xl">{{ stockData.symbol }}</span>
         <span class="pr-4 text-lg font-thin"
@@ -20,9 +24,13 @@
       <!-- Flag buttons -->
       <div class="w-1/5">
         <div class="inline-block pr-4">
-          <i class="text-white cursor-pointer bx bx-list-check bx-md"></i>
+          <i
+            class="p-1 text-white rounded-full cursor-pointer hover:bg-gray-200 bx bx-list-check bx-md"
+          ></i>
         </div>
-        <i class="text-red-500 cursor-pointer bx bxs-flag bx-md"></i>
+        <i
+          class="p-1 text-red-500 rounded-full cursor-pointer hover:bg-gray-200 bx bxs-flag bx-md"
+        ></i>
       </div>
     </div>
     <!-- Tabla con operaciones -->
@@ -95,6 +103,15 @@ export default {
         ],
       },
     }
+  },
+  async created() {
+    this.stockData.symbol = this.$route.params.valor
+    await this.getStockOperationsLog()
+  },
+  methods: {
+    getStockOperationsLog() {
+      // TODO: llamar API para obtener detalle de info valor
+    },
   },
 }
 </script>

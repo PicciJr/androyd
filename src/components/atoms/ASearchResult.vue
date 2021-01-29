@@ -1,6 +1,6 @@
 <!-- Resultados que se despliegan al encontrar un resultado -->
 <template>
-  <div class="flex items-center justify-between p-2 mb-1 text-lg bg-gray-300">
+  <div class="flex items-center justify-between p-2 mb-1 text-lg bg-gray-300 hover:bg-gray-600">
     <!-- Symbol and Name -->
     <router-link
       :to="'/detalle-valor/' + foundStock.tickerSymbol"

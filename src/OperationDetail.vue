@@ -40,7 +40,7 @@
     </div>
     <!-- Tabla con datos de la operación -->
     <div class="mb-2">
-      <m-operations-table></m-operations-table>
+      <m-operations-table @table-edit="handleEditedField"></m-operations-table>
     </div>
     <!-- Notas de la operación -->
     <div class="pl-2">
@@ -55,8 +55,18 @@
       <a-labeled-button
         :btnType="setButtonTypeBasedOnOperationType"
         :btnText="setButtonTextBasedOnOperationType"
+        @cancel="handleCloseOperationAction"
+        @confirm="handleSaveChangesAction"
       ></a-labeled-button>
     </div>
+    <!-- Modal de confirmación -->
+    <m-confirm-action-modal
+      v-if="isModalOpened"
+      @closed="closeConfirmationModal"
+      @confirmed-action="handleModalConfirmationAction"
+      @cancelled-action="handleModalCancellationAction"
+      :modalMessage="modalMessage"
+    ></m-confirm-action-modal>
   </div>
 </template>
 
@@ -65,6 +75,7 @@ import AFlagBadge from '@/components/atoms/AFlagBadge'
 import ALabeledButton from '@/components/atoms/ALabeledButton'
 import AJournalNote from '@/components/atoms/AJournalNote'
 import MOperationsTable from '@/components/molecules/MOperationsTable'
+import MConfirmActionModal from '@/components/molecules/MConfirmActionModal'
 export default {
   name: 'OperationDetail',
   components: {
@@ -72,18 +83,19 @@ export default {
     ALabeledButton,
     AJournalNote,
     MOperationsTable,
+    MConfirmActionModal,
   },
   data() {
     return {
       stockData: {
-        symbol: '$ROKU',
-        currentPrice: 48.5,
-        currentPerformance: 0.0,
-        daysActive: 0.0,
-        weeksActive: 0.0,
-        priceChgYesterday: 0.0,
-        currentStopLoss: 0.0,
-        bestPerformanceToDate: 0.0,
+        symbol: null,
+        currentPrice: null,
+        currentPerformance: null,
+        daysActive: null,
+        weeksActive: null,
+        priceChgYesterday: null,
+        currentStopLoss: null,
+        bestPerformanceToDate: null,
         pendingAction: {
           type: 'red',
           smallText: 'Ceñir Stop Loss',
@@ -105,8 +117,18 @@ export default {
             noteText: 'Un día cualquiera',
           },
         ],
+        entryPrice: null,
+        initialSize: null,
+        initialPriceAction: null,
+        initialVolume: null,
+        entryDate: null,
+        supportLevel_1: null,
+        supportLevel_2: null,
+        technicalPattern: null,
       },
       hasStockBeenEdited: false,
+      isModalOpened: false,
+      modalMessage: null,
     }
   },
   computed: {
@@ -115,6 +137,42 @@ export default {
     },
     setButtonTypeBasedOnOperationType() {
       return this.hasStockBeenEdited ? 'confirm' : 'cancel'
+    },
+  },
+  methods: {
+    closeConfirmationModal() {
+      this.isModalOpened = false
+      this.setModalMessage('')
+    },
+    handleCloseOperationAction() {
+      this.isModalOpened = true
+      this.setModalMessage('¿Seguro que deseas cerrar la operación?')
+    },
+    handleSaveChangesAction() {
+      this.isModalOpened = true
+      this.setModalMessage('¿Son correctos todos los datos?')
+    },
+    setModalMessage(message) {
+      this.modalMessage = message
+    },
+    handleEditedField(value, field) {
+      this.hasStockBeenEdited = true
+      this.updateStockData(value, field)
+    },
+    updateStockData(value, field) {
+      this.stockData[this.getObjectKeyById(field.id)] = value
+    },
+    getObjectKeyById(id) {
+      return Object.keys(this.stockData).find((key) => key === id)
+    },
+    handleModalConfirmationAction() {
+      this.isModalOpened = false
+      console.log('este es el objeto que voy a enviar', this.stockData)
+      // TODO: enviar datos a back
+    },
+    handleModalCancellationAction() {
+      this.isModalOpened = false
+      // TODO: enviar datos a back
     },
   },
 }
