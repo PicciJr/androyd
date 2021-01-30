@@ -85,6 +85,8 @@
     <m-confirm-action-modal
       v-if="isModalOpened"
       @closed="closeConfirmationModal"
+      @confirmed-action="handleActionConfirmed"
+      @cancelled-action="handleActionCancelled"
     ></m-confirm-action-modal>
   </div>
 </template>
@@ -156,6 +158,14 @@ export default {
     },
     closeConfirmationModal() {
       this.isModalOpened = false
+    },
+    handleActionConfirmed() {
+      this.isModalOpened = false
+      // TODO: enviar datos a back de la nueva operacion
+    },
+    handleActionCancelled() {
+      this.isModalOpened = false
+      // TODO: enviar datos a back de la nueva operacion
     },
   },
   computed: {
