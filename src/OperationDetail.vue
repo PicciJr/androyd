@@ -43,6 +43,17 @@
       <m-operations-table @table-edit="handleEditedField"></m-operations-table>
     </div>
     <!-- Notas de la operación -->
+    <div class="flex items-center justify-start w-64 mb-2">
+      <span class="pr-4 text-lg font-extrabold text-gray-200 uppercase"
+        >Notas</span
+      >
+      <div
+        class="px-2 py-1 bg-gray-200 rounded-full cursor-pointer"
+        @click.stop="handleOpenNewJournalModal"
+      >
+        <i class="text-white fill-current bx bx-pencil bx-xs"></i>
+      </div>
+    </div>
     <div class="pl-2">
       <a-journal-note
         v-for="note in stockData.journalNotes"
@@ -67,6 +78,12 @@
       @cancelled-action="handleModalCancellationAction"
       :modalMessage="modalMessage"
     ></m-confirm-action-modal>
+    <!-- Modal para introducir nuevas notas -->
+    <m-new-journal-note
+      v-if="isNewJournalModalOpened"
+      @close-modal="handleCloseNewJournalNote"
+      @save-note="handleSaveNote"
+    ></m-new-journal-note>
   </div>
 </template>
 
@@ -76,6 +93,7 @@ import ALabeledButton from '@/components/atoms/ALabeledButton'
 import AJournalNote from '@/components/atoms/AJournalNote'
 import MOperationsTable from '@/components/molecules/MOperationsTable'
 import MConfirmActionModal from '@/components/molecules/MConfirmActionModal'
+import MNewJournalNote from '@/components/molecules/MNewJournalNote'
 export default {
   name: 'OperationDetail',
   components: {
@@ -84,6 +102,7 @@ export default {
     AJournalNote,
     MOperationsTable,
     MConfirmActionModal,
+    MNewJournalNote,
   },
   data() {
     return {
@@ -128,6 +147,7 @@ export default {
       },
       hasStockBeenEdited: false,
       isModalOpened: false,
+      isNewJournalModalOpened: false,
       modalMessage: null,
     }
   },
@@ -174,6 +194,16 @@ export default {
       this.isModalOpened = false
       // TODO: enviar datos a back
     },
+    handleOpenNewJournalModal() {
+      this.isNewJournalModalOpened = true
+    },
+    handleCloseNewJournalNote() {
+      this.isNewJournalModalOpened = false
+    },
+    handleSaveNote({ noteDate, noteContent }) {
+      // TODO: enviar info a backend
+      console.log('la nota que voy a enviar es', noteDate, noteContent)
+    }
   },
 }
 </script>

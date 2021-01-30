@@ -36,14 +36,19 @@
                 rows="5"
                 class="p-2 text-white bg-gray-300 border border-white rounded-lg outline-none resize-none"
                 placeholder="Nueva nota sobre el valor..."
+                v-model="noteContent"
               >
               </textarea>
               <i
                 class="absolute right-0 -mt-12 text-green-500 cursor-pointer fill-current bx bxs-check-circle bx-md"
+                @click="handleSaveNote"
               ></i>
             </div>
-            <div class="self-start" @click="closeModal">
-              <a-labeled-button btnType="cancel"></a-labeled-button>
+            <div class="self-start p-1">
+              <a-labeled-button
+                btnType="cancel"
+                @cancel="closeModal"
+              ></a-labeled-button>
             </div>
           </div>
         </div>
@@ -66,12 +71,20 @@ export default {
   data() {
     return {
       isOpen: true,
-      noteDate: '20/8/2020',
+      noteDate: new Date().toLocaleDateString(),
+      noteContent: null,
     }
   },
   methods: {
     closeModal() {
       this.isOpen = false
+      this.$emit('close-modal')
+    },
+    handleSaveNote() {
+      this.$emit('save-note', {
+        noteDate: this.noteDate,
+        noteContent: this.noteContent,
+      })
     },
   },
 }
