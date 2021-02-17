@@ -92,6 +92,8 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 import AFlagBadge from '@/components/atoms/AFlagBadge'
 import AInputBox from '@/components/atoms/AInputBox'
 import ASelectInputBox from '@/components/atoms/ASelectInputBox'
@@ -130,8 +132,8 @@ export default {
       ],
       technicalPattern: '',
       technicalPatternDuration: null,
-      priceChg: 5.5,
-      stockFullName: 'Roku Entertainment',
+      priceChg: 5.5, // API financiera
+      stockFullName: 'Roku Entertainment', // API financiera
       strategyPrinciples: [
         'Buenos fundamentales',
         'Fuerza relativa',
@@ -161,11 +163,31 @@ export default {
     },
     handleActionConfirmed() {
       this.isModalOpened = false
-      // TODO: enviar datos a back de la nueva operacion
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($operation: NewOperation) {
+            newOperation(input: $operation) {
+              id
+              tickerSymbol
+            }
+          }
+        `,
+        variables: {
+          operation: {
+            tickerSymbol: this.tickerSymbol,
+            hasStockFlagMessage: this.hasStockFlagMessage,
+            initialPositionSize: parseFloat(this.initialPositionSize),
+            entryPrice: parseFloat(this.entryPrice),
+            stopLossDistance: parseFloat(this.stopLossDistance),
+            technicalPattern: this.technicalPattern,
+            technicalPatternDuration: parseFloat(this.technicalPatternDuration),
+            tags: this.tags,
+          },
+        },
+      })
     },
     handleActionCancelled() {
       this.isModalOpened = false
-      // TODO: enviar datos a back de la nueva operacion
     },
   },
   computed: {

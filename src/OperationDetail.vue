@@ -8,7 +8,7 @@
     <!-- Info de cabecera -->
     <div class="flex justify-between mb-2 text-white">
       <div class="flex items-center w-3/4">
-        <div class="pr-4 text-2xl">{{ stockData.symbol }}</div>
+        <div class="pr-4 text-2xl">{{ stockData.tickerSymbol }}</div>
         <div class="pr-4 text-lg font-thin">({{ stockData.currentPrice }})</div>
         <div class="pr-4 font-bold text-gray-200">
           {{ stockData.currentPerformance }}%
@@ -107,12 +107,12 @@ export default {
   data() {
     return {
       stockData: {
-        symbol: null,
-        currentPrice: null,
-        currentPerformance: null,
+        tickerSymbol: null,
+        currentPrice: null, // API financiera
+        currentPerformance: null, // rendimiento que le estoy sacando a una operación actual
         daysActive: null,
         weeksActive: null,
-        priceChgYesterday: null,
+        priceChgYesterday: null, // API financiera
         currentStopLoss: null,
         bestPerformanceToDate: null,
         pendingAction: {
@@ -203,7 +203,7 @@ export default {
     handleSaveNote({ noteDate, noteContent }) {
       // TODO: enviar info a backend
       console.log('la nota que voy a enviar es', noteDate, noteContent)
-    }
+    },
   },
 }
 </script>

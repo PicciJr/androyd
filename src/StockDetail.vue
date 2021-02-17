@@ -9,7 +9,7 @@
         ></i>
       </router-link>
       <div class="flex items-center justify-center w-full">
-        <span class="pr-4 text-2xl">{{ stockData.symbol }}</span>
+        <span class="pr-4 text-2xl">{{ stockData.tickerSymbol }}</span>
         <span class="pr-4 text-lg font-thin"
           >({{ stockData.currentPrice }})</span
         >
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import ACircleSnapshot from '@/components/atoms/ACircleSnapshot'
 import AJournalNote from '@/components/atoms/AJournalNote'
 import MStockDetailTable from '@/components/molecules/MStockDetailTable'
@@ -68,13 +69,13 @@ export default {
   data() {
     return {
       stockData: {
-        symbol: '$ROKU',
-        currentPrice: 48.5,
-        currentPerformance: 0.0,
-        daysActive: 0.0,
-        weeksActive: 0.0,
-        priceChgYesterday: 0.0,
-        currentStopLoss: 0.0,
+        tickerSymbol: '$ROKU',
+        currentPrice: null,
+        currentPerformance: null, // rendimiento que le estoy sacando a una operación actual
+        daysActive: null,
+        weeksActive: null,
+        priceChgYesterday: null,
+        currentStopLoss: null,
         journalNotes: [
           {
             isSuccessNote: true,
@@ -102,10 +103,28 @@ export default {
           },
         ],
       },
+      getOperations: '',
     }
   },
+  apollo: {
+    getOperations: {
+      query: gql`
+        query getOperations($tickerSymbol: String!) {
+          getOperations(tickerSymbol: $tickerSymbol) {
+            id
+            performance
+          }
+        }
+      `,
+      variables() {
+        return {
+          tickerSymbol: this.stockData.tickerSymbol,
+        }
+      },
+    },
+  },
   async created() {
-    this.stockData.symbol = this.$route.params.valor
+    this.stockData.tickerSymbol = this.$route.params.valor
     await this.getStockOperationsLog()
   },
   methods: {

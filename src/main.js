@@ -12,7 +12,12 @@ import Vuesax from 'vuesax'
 import VueTailwind from 'vue-tailwind'
 import vClickOutside from 'vue-click-outside'
 import { roundTwoDecimals } from '../src/filters'
-import 'vuesax/dist/vuesax.css' //Vuesax styles
+//Vuesax styles
+import 'vuesax/dist/vuesax.css'
+
+// Apollo Graphql
+import ApolloClient from 'apollo-boost'
+import VueApollo from 'vue-apollo'
 
 Vue.use(Vuesax, {
   colors: {
@@ -44,7 +49,20 @@ const vueTailwindSettings = {
     },
   },
 }
+
+// Apollo
+const apolloClient = new ApolloClient({
+  // You should use an absolute URL here
+  uri: 'http://localhost:4000/',
+})
+
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient,
+})
+
 Vue.use(VueTailwind, vueTailwindSettings)
+
+Vue.use(VueApollo)
 
 Vue.use(vClickOutside)
 
@@ -64,4 +82,4 @@ Vue.use(VueRouter)
 
 Vue.filter('roundTwoDecimals', roundTwoDecimals)
 
-new Vue({ el: '#app', router, render: (h) => h(App) })
+new Vue({ el: '#app', apolloProvider, router, render: (h) => h(App) })
