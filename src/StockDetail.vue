@@ -9,16 +9,14 @@
         ></i>
       </router-link>
       <div class="flex items-center justify-center w-full">
-        <span class="pr-4 text-2xl">{{ stockData.tickerSymbol }}</span>
-        <span class="pr-4 text-lg font-thin"
-          >({{ stockData.currentPrice }})</span
-        >
+        <span class="pr-4 text-2xl">{{ stock.tickerSymbol }}</span>
+        <span class="pr-4 text-lg font-thin">({{ stock.currentPrice }})</span>
         <span class="pr-4 font-bold text-gray-200">{{
-          stockData.currentPerformance
+          stock.currentPerformance
         }}</span>
         <label class="pr-4">Ayer: </label>
         <span class="font-bold text-gray-200">{{
-          stockData.priceChgYesterday
+          stock.priceChgYesterday
         }}</span>
       </div>
       <!-- Flag buttons -->
@@ -34,20 +32,28 @@
       </div>
     </div>
     <!-- Tabla con operaciones -->
-    <div>
-      <m-stock-detail-table></m-stock-detail-table>
-    </div>
-    <!-- Snapshot info en circulos -->
-    <div class="flex justify-center mt-8 mb-4">
-      <div class="px-2" v-for="info in stockData.historicalData" :key="info.id">
-        <a-circle-snapshot
-          :text="info.data"
-          :secondaryText="info.tooltipText"
-        ></a-circle-snapshot>
+    <div v-if="stock.operationsList.length > 0" class="mb-8">
+      <m-stock-detail-table
+        :operationsLogData="stock.operationsList"
+      ></m-stock-detail-table>
+      <!-- Snapshot info en circulos -->
+      <div class="flex justify-center mt-8 mb-4">
+        <div class="px-2" v-for="info in stock.historicalData" :key="info.id">
+          <a-circle-snapshot
+            :text="info.data"
+            :secondaryText="info.tooltipText"
+          ></a-circle-snapshot>
+        </div>
       </div>
     </div>
+    <!-- No constan operaciones -->
+    <div v-else class="mb-8">
+      <span class="flex justify-center text-xl font-bold text-gray-200"
+        >No hay operaciones hasta ahora</span
+      >
+    </div>
     <!-- Notas del valor -->
-    <div class="flex" v-for="note in stockData.journalNotes" :key="note.id">
+    <div class="flex" v-for="note in stock.journalNotes" :key="note.id">
       <a-journal-note :journalNoteData="note"></a-journal-note>
     </div>
   </div>
@@ -68,7 +74,7 @@ export default {
   },
   data() {
     return {
-      stockData: {
+      stock: {
         tickerSymbol: '$ROKU',
         currentPrice: null,
         currentPerformance: null, // rendimiento que le estoy sacando a una operación actual
@@ -102,35 +108,40 @@ export default {
             tooltipText: 'Numero de trades totales',
           },
         ],
+        operationsList: null,
       },
-      getOperations: '',
     }
   },
   apollo: {
-    getOperations: {
+    stock: {
       query: gql`
-        query getOperations($tickerSymbol: String!) {
-          getOperations(tickerSymbol: $tickerSymbol) {
-            id
-            performance
+        query stock($tickerSymbol: String!) {
+          stock(tickerSymbol: $tickerSymbol) {
+            tickerSymbol
+            journalNotes {
+              isSuccessNote
+              noteDate
+              noteText
+            }
+            operationsList {
+              id
+              tickerSymbol
+              operationStatus
+              operationActiveDays
+              operationPerformance
+            }
           }
         }
       `,
       variables() {
         return {
-          tickerSymbol: this.stockData.tickerSymbol,
+          tickerSymbol: this.stock.tickerSymbol,
         }
       },
     },
   },
-  async created() {
-    this.stockData.tickerSymbol = this.$route.params.valor
-    await this.getStockOperationsLog()
-  },
-  methods: {
-    getStockOperationsLog() {
-      // TODO: llamar API para obtener detalle de info valor
-    },
+  created() {
+    this.stock.tickerSymbol = this.$route.params.valor.toUpperCase()
   },
 }
 </script>

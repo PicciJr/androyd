@@ -14,7 +14,7 @@ export default {
   inheritAttrs: false,
   props: {
     value: {
-      tyepe: String,
+      type: String,
       default: null
     },
     field: {

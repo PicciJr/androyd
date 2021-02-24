@@ -8,39 +8,42 @@
     <!-- Info de cabecera -->
     <div class="flex justify-between mb-2 text-white">
       <div class="flex items-center w-3/4">
-        <div class="pr-4 text-2xl">{{ stockData.tickerSymbol }}</div>
-        <div class="pr-4 text-lg font-thin">({{ stockData.currentPrice }})</div>
+        <div class="pr-4 text-2xl">{{ stock.tickerSymbol }}</div>
+        <div class="pr-4 text-lg font-thin">({{ stock.currentPrice }})</div>
         <div class="pr-4 font-bold text-gray-200">
-          {{ stockData.currentPerformance }}%
+          {{ stock.currentPerformance }}%
         </div>
         <div class="font-bold text-gray-200">
-          {{ stockData.daysActive }}D / {{ stockData.weeksActive }}W
+          {{ stock.daysActive }}D / {{ stock.weeksActive }}W
         </div>
       </div>
       <div class="flex flex-col w-1/4">
         <div class="flex">
           <label class="pr-4">Ayer: </label>
           <div class="font-bold text-gray-200">
-            {{ stockData.priceChgYesterday }}
+            {{ stock.priceChgYesterday }}
           </div>
         </div>
         <div class="flex">
           <label class="pr-4">SL: </label>
           <div class="font-bold text-gray-200">
-            {{ stockData.currentStopLoss }}
+            {{ stock.currentStopLoss }}
           </div>
         </div>
         <div class="flex">
           <label class="pr-4">Máx %: </label>
           <div class="font-bold text-gray-200">
-            {{ stockData.bestPerformanceToDate }}
+            {{ stock.bestPerformanceToDate }}
           </div>
         </div>
       </div>
     </div>
     <!-- Tabla con datos de la operación -->
     <div class="mb-2">
-      <m-operations-table @table-edit="handleEditedField"></m-operations-table>
+      <m-operations-table
+        @table-edit="handleEditedField"
+        :stockData="currentActiveOperation"
+      ></m-operations-table>
     </div>
     <!-- Notas de la operación -->
     <div class="flex items-center justify-start w-64 mb-2">
@@ -56,7 +59,7 @@
     </div>
     <div class="pl-2">
       <a-journal-note
-        v-for="note in stockData.journalNotes"
+        v-for="note in stock.journalNotes"
         :key="note.id"
         :journalNoteData="note"
       ></a-journal-note>
@@ -88,6 +91,7 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import AFlagBadge from '@/components/atoms/AFlagBadge'
 import ALabeledButton from '@/components/atoms/ALabeledButton'
 import AJournalNote from '@/components/atoms/AJournalNote'
@@ -106,7 +110,7 @@ export default {
   },
   data() {
     return {
-      stockData: {
+      stock: {
         tickerSymbol: null,
         currentPrice: null, // API financiera
         currentPerformance: null, // rendimiento que le estoy sacando a una operación actual
@@ -151,12 +155,52 @@ export default {
       modalMessage: null,
     }
   },
+  apollo: {
+    stock: {
+      query: gql`
+        query stock($tickerSymbol: String!) {
+          stock(tickerSymbol: $tickerSymbol) {
+            id
+            tickerSymbol
+            journalNotes {
+              isSuccessNote
+              noteDate
+              noteText
+            }
+            operationsList {
+              id
+              tickerSymbol
+              operationStatus
+              operationActiveDays
+              operationPerformance
+              entryPrice
+              createdAt
+              endDate
+              tags
+            }
+          }
+        }
+      `,
+      variables() {
+        return {
+          tickerSymbol: this.stock.tickerSymbol,
+        }
+      },
+    },
+  },
+  created() {
+    this.stock.tickerSymbol = this.$route.params.valor.toUpperCase()
+  },
   computed: {
     setButtonTextBasedOnOperationType() {
       return this.hasStockBeenEdited ? 'Guardar cambios' : 'Cerrar operación'
     },
     setButtonTypeBasedOnOperationType() {
       return this.hasStockBeenEdited ? 'confirm' : 'cancel'
+    },
+    currentActiveOperation() {
+      return this.stock.operationsList[0]
+      // TODO: obtener esto dinámicamente en base a los campos devueltos
     },
   },
   methods: {
@@ -180,16 +224,38 @@ export default {
       this.updateStockData(value, field)
     },
     updateStockData(value, field) {
-      this.stockData[this.getObjectKeyById(field.id)] = value
+      this.stock[this.getObjectKeyById(field.id)] = value
     },
     getObjectKeyById(id) {
-      return Object.keys(this.stockData).find((key) => key === id)
+      return Object.keys(this.stock).find((key) => key === id)
     },
-    handleModalConfirmationAction() {
+    // Accion de confirmación (pulsar a SI)
+    async handleModalConfirmationAction() {
       this.isModalOpened = false
-      console.log('este es el objeto que voy a enviar', this.stockData)
       // TODO: enviar datos a back
+      try {
+        const result = await this.$apollo.mutate({
+          mutation: gql`
+            mutation($id: ID!) {
+              closeOperation(id: $id) {
+                id
+                createdAt
+                endDate
+                tags
+              }
+            }
+          `,
+          // Parameters
+          variables: {
+            id: this.getActiveOperationID(this.stock.operationsList),
+          },
+        })
+        return result
+      } catch (err) {
+        console.log('catch err', err)
+      }
     },
+    // Accion de negacion (pulsar a NO)
     handleModalCancellationAction() {
       this.isModalOpened = false
       // TODO: enviar datos a back
@@ -204,6 +270,10 @@ export default {
       // TODO: enviar info a backend
       console.log('la nota que voy a enviar es', noteDate, noteContent)
     },
+    getActiveOperationID(operations) {
+      // TODO: obtener dinámicamente el ID de la operación activa de todas las que puede tener un valor
+      return operations[0].id
+    }
   },
 }
 </script>

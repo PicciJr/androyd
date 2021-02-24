@@ -5,14 +5,14 @@
       <div class="w-1/4">
         <a-table-field
           :class="setTextColorBasedOnStatus(data)"
-          v-if="data.isActiveOperation"
+          v-if="isActiveOperation(data)"
           fieldText="Operación activa"
         ></a-table-field>
         <a-table-field v-else :fieldText="`Operación ${index}`"></a-table-field>
       </div>
       <div class="w-1/4">
         <a-table-field
-          v-if="data.isActiveOperation"
+          v-if="isActiveOperation(data)"
           :fieldText="data.operationStatus"
         ></a-table-field>
         <a-table-field
@@ -42,28 +42,24 @@ export default {
       default() {
         return [
           {
-            isActiveOperation: true,
             operationStatus: 'In progress',
             operationActiveDays: 4,
             operationEndDate: null,
             operationPerformance: 5.5,
           },
           {
-            isActiveOperation: false,
             operationStatus: 'Closed',
             operationEndDate: '9/9/2011',
             operationActiveDays: 4,
             operationPerformance: -3.5,
           },
           {
-            isActiveOperation: false,
             operationStatus: 'Closed',
             operationEndDate: '9/9/2011',
             operationActiveDays: 4,
             operationPerformance: -3.5,
           },
           {
-            isActiveOperation: false,
             operationStatus: 'Closed',
             operationEndDate: '9/9/2011',
             operationActiveDays: 4,
@@ -75,7 +71,10 @@ export default {
   },
   methods: {
     setTextColorBasedOnStatus(operation) {
-      return operation.isActiveOperation ? 'text-green-500' : ''
+      return this.isActiveOperation(operation) ? 'text-green-500' : ''
+    },
+    isActiveOperation(operation) {
+      return operation.operationStatus === 'In progress'
     },
   },
 }

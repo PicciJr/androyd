@@ -8,6 +8,7 @@
       <div class="w-full">
         <a-table-edit-field
           :field="field"
+          :value="field.value"
           @table-edit="handleTableEdit"
         ></a-table-edit-field>
       </div>
@@ -47,7 +48,7 @@ export default {
         {
           id: 'entryPrice',
           label: 'Precio entrada',
-          value: null,
+          value: this.stockData.entryPrice,
         },
         {
           id: 'initialSize',

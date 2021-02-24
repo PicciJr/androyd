@@ -72,7 +72,7 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', component: Home },
-    { path: '/detalle-operacion/:id', component: OperationDetail },
+    { path: '/detalle-operacion/:valor', component: OperationDetail },
     { path: '/detalle-valor/:valor', component: StockDetail },
     { path: '/nueva-operacion/:valor', component: NewOperation },
     { path: '/backtesting', component: Backtesting },
