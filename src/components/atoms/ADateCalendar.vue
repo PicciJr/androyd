@@ -12,6 +12,7 @@
       placeholder="Seleccione una fecha"
       date-format="Y-m-d"
       user-format="d/m/Y"
+      @change="$emit('updated-date', date)"
     />
   </div>
 </template>
@@ -28,18 +29,6 @@ export default {
     return {
       date: '', // año/mes/dia
     }
-  },
-  computed: {
-    /** Retornar en formato dia/mes/año de la fecha seleccionada */
-    formatedDate() {
-      let date = new Date(this.date)
-      const dd = String(date.getDate()).padStart(2, '0')
-      const mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
-      const yyyy = date.getFullYear()
-
-      date = dd + '/' + mm + '/' + yyyy
-      return date
-    },
   },
 }
 </script>
