@@ -23,19 +23,19 @@ export default {
     return {
       stocksFound: [
         {
-          tickerSymbol: '$ROKU',
+          tickerSymbol: 'ROKU',
           tickerName: 'Roku Entertainment',
           hasRedFlag: true,
           onWatchlist: true,
         },
         {
-          tickerSymbol: '$CGC',
+          tickerSymbol: 'CGC',
           tickerName: 'Canopy Growth',
           hasRedFlag: false,
           onWatchlist: true,
         },
         {
-          tickerSymbol: '$FB',
+          tickerSymbol: 'FB',
           tickerName: 'Facebook Inc.',
           hasRedFlag: true,
           onWatchlist: false,

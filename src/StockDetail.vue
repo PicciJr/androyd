@@ -10,23 +10,24 @@
       </router-link>
       <div class="flex items-center justify-center w-full">
         <span class="pr-4 text-2xl">{{ stock.tickerSymbol }}</span>
-        <span class="pr-4 text-lg font-thin">({{ stock.currentPrice }})</span>
+        <span class="pr-4 text-lg font-thin">(${{ stock.currentPrice }})</span>
         <span class="pr-4 font-bold text-gray-200">{{
           stock.currentPerformance
-        }}</span>
-        <label class="pr-4">Ayer: </label>
-        <span class="font-bold text-gray-200">{{
-          stock.priceChgYesterday
         }}</span>
       </div>
       <!-- Flag buttons -->
       <div class="w-1/5">
         <div class="inline-block pr-4">
           <i
-            class="p-1 text-white rounded-full cursor-pointer hover:bg-gray-200 bx bx-list-check bx-md"
+            :class="[
+              'p-1 rounded-full cursor-pointer hover:bg-gray-200 bx bx-list-check bx-md',
+              setWatchlistFlagStyle,
+            ]"
+            @click="updateWatchlistStatus"
           ></i>
         </div>
         <i
+          v-show="isStockToAvoid"
           class="p-1 text-red-500 rounded-full cursor-pointer hover:bg-gray-200 bx bxs-flag bx-md"
         ></i>
       </div>
@@ -75,12 +76,11 @@ export default {
   data() {
     return {
       stock: {
-        tickerSymbol: '$ROKU',
+        tickerSymbol: null,
         currentPrice: null,
         currentPerformance: null, // rendimiento que le estoy sacando a una operación actual
         daysActive: null,
         weeksActive: null,
-        priceChgYesterday: null,
         currentStopLoss: null,
         journalNotes: [
           {
@@ -117,7 +117,10 @@ export default {
       query: gql`
         query stock($tickerSymbol: String!) {
           stock(tickerSymbol: $tickerSymbol) {
+            id
             tickerSymbol
+            currentPrice
+            hasActiveOperation
             journalNotes {
               isSuccessNote
               noteDate
@@ -130,6 +133,8 @@ export default {
               operationActiveDays
               operationPerformance
             }
+            isOnWatchlist
+            isStockToAvoid
           }
         }
       `,
@@ -142,6 +147,57 @@ export default {
   },
   created() {
     this.stock.tickerSymbol = this.$route.params.valor.toUpperCase()
+  },
+  computed: {
+    isStockInWatchlist() {
+      return this.stock.isOnWatchlist
+    },
+    isStockToAvoid() {
+      return this.stock.isStockToAvoid !== null
+    },
+    setWatchlistFlagStyle() {
+      return this.isStockInWatchlist ? 'text-green-500' : 'text-white'
+    },
+  },
+  methods: {
+    async updateWatchlistStatus() {
+      try {
+        if (!this.isStockInWatchlist) {
+          await this.$apollo.mutate({
+            mutation: gql`
+              mutation($tickerSymbol: String!) {
+                addStockToWatchlist(tickerSymbol: $tickerSymbol) {
+                  tickerSymbol
+                  isOnWatchlist
+                }
+              }
+            `,
+            // Parameters
+            variables: {
+              tickerSymbol: this.stock.tickerSymbol,
+            },
+          })
+        } else {
+          await this.$apollo.mutate({
+            mutation: gql`
+              mutation($tickerSymbol: String!) {
+                removeStockFromWatchlist(tickerSymbol: $tickerSymbol) {
+                  tickerSymbol
+                  isOnWatchlist
+                }
+              }
+            `,
+            // Parameters
+            variables: {
+              tickerSymbol: this.stock.tickerSymbol,
+            },
+          })
+        }
+        this.stock.isOnWatchlist = !this.stock.isOnWatchlist
+      } catch (err) {
+        console.log('catch err', err)
+      }
+    },
   },
 }
 </script>

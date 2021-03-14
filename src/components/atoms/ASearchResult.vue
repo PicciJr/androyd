@@ -38,7 +38,7 @@ export default {
       type: Object,
       default() {
         return {
-          tickerSymbol: '$ROKU',
+          tickerSymbol: 'ROKU',
           tickerName: 'Roku Entertainment',
           hasRedFlag: true,
           onWatchlist: true,
