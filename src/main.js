@@ -8,6 +8,7 @@ import OperationDetail from './OperationDetail.vue'
 import StockDetail from './StockDetail.vue'
 import NewOperation from './NewOperation.vue'
 import Backtesting from './Backtesting.vue'
+import Screener from './Screener.vue'
 import Vuesax from 'vuesax'
 import VueTailwind from 'vue-tailwind'
 import vClickOutside from 'vue-click-outside'
@@ -76,6 +77,7 @@ const router = new VueRouter({
     { path: '/detalle-valor/:valor', component: StockDetail },
     { path: '/nueva-operacion/:valor', component: NewOperation },
     { path: '/backtesting', component: Backtesting },
+    { path: '/screener', component: Screener },
   ],
 })
 Vue.use(VueRouter)
