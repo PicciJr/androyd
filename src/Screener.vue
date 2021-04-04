@@ -45,6 +45,7 @@ import gql from 'graphql-tag'
 import ASpinnerLoader from '@/components/atoms/ASpinnerLoader'
 
 export default {
+  name: 'Screener',
   components: {
     ASpinnerLoader,
   },
