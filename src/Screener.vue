@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-full">
     <vs-button class="mb-8" color="#2F855A" @click="getNewStocks"
       >Comenzar búsqueda</vs-button
     >
@@ -18,7 +18,12 @@
         </vs-tr>
       </template>
       <template #tbody>
-        <vs-tr :key="i" v-for="(tr, i) in screenerResults" :data="tr">
+        <vs-tr
+          :key="i"
+          v-for="(tr, i) in screenerResults"
+          :data="tr"
+          class="hover:text-gray-600"
+        >
           <vs-td>
             {{ tr.tickerSymbol }}
           </vs-td>
